@@ -1,0 +1,6 @@
+---
+- name: Import Database tasks
+  import_playbook: dbservers.yml
+
+- name: Import Web Servers Tasks
+  import_playbook: webservers.yml

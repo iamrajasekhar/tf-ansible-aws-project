@@ -1,0 +1,26 @@
+---
+# ssh connection
+ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+ansible_ssh_user: ubuntu
+ansible_ssh_private_key_file: /home/rajasekhar/.ssh/lamp-test.pem
+ansible_interpreter_python: /usr/bin/python3
+
+# database settings
+db_host: "gym.cug004zigyrc.us-east-1.rds.amazonaws.com"
+db_name: gymdb
+login_port: 3306
+
+# web server
+web_port: 80
+web_host: "18.205.159.101"
+
+
+# git settings
+repo_url: "https://github.com/dhanbdrkarki1"
+repo_name: "gym-lamp-stack"
+git_branch: "main"
+repo_dir: "/home/ubuntu/lamp-in-production"
+
+# SQL script file
+script_file: "/home/ubuntu/lamp-in-production/gymdb.sql"
+...

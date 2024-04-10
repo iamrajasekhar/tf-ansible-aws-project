@@ -1,0 +1,14 @@
+---
+# tasks file for git
+
+- name: Install git package
+  apt:
+    name: git
+    update_cache: yes
+    state: present
+
+- name: Git Checkout
+  git:
+    repo: "{{ repo_url }}/{{ repo_name }}.git"
+    version: "{{ git_branch }}"
+    dest: "{{ repo_dir }}"

@@ -1,0 +1,42 @@
+---
+# tasks for mysql
+- include_vars: secrets.yml
+- name: Install mysql and other dependencies
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  loop:
+    - python3-pip
+    - mysql-server
+    - mysql-client
+  tags: [ packages, mysql ]
+
+- name: Install pymysql python package
+  ansible.builtin.pip:
+    name: pymysql==1.1.0
+
+
+- name: Ensure mysql is enabled to run on startup
+  service:
+    name: mysql
+    state: started
+    enabled: true
+  notify:
+    - restart mysql
+
+
+
+- name: Create MySQL database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: present
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_password }}"
+    login_host: "{{ db_host }}"
+    login_port: "{{ login_port }}"
+  tags: [ mysql ]
+
+
+
+...

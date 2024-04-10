@@ -1,0 +1,31 @@
+---
+- name: Install apache2
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+  tags: [packages]
+
+
+- name: Create document root for domain configured in host variable
+  file:
+    path: "/var/www/{{ web_host }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Set up virtuahHost
+  template:
+    src: "apache-template.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ web_host }}.conf"
+
+- name: Enable site
+  command: a2ensite {{ web_host }}.conf
+  notify: restart apache
+
+- name: Allow HTTP on port {{ web_port }}"
+  ufw:
+    rule: allow
+    proto: tcp
+    port: "{{ web_port }}"
